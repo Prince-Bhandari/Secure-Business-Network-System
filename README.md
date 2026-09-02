@@ -138,6 +138,22 @@ Switch# show ip interface brief
 
 ---
 
+## First Hop Redundancy Protocol (HSRP) & Gateway Load Sharing
+![alt text](/img/image.png)
+To eliminate single points of failure at the default gateway level, Hot Standby Router Protocol (HSRP) is configured across `CORE-SW1` and `CORE-SW2`. An **Active/Active gateway load-sharing** strategy is implemented to distribute traffic processing across both distribution switches rather than leaving hardware idle.
+
+* **Deterministic Failover**: Gateways role are explicitly assigned using HSRP priorities so that it can be configured easily without having to rely on the default IP address for failover. 
+Primary switches automatically reclaim the Active gateway role upon recovering from a failure.
+* **Gateway Distribution Matrix**:
+  * **CORE-SW1 (Primary Gateway)**: Active for **VLAN 10** (Management) and **VLAN 20** (LAN). Standby for VLANs 50 and 90.
+  * **CORE-SW2 (Primary Gateway)**: Active for **VLAN 50** (WLAN) and **VLAN 90** (VOIP). Standby for VLANs 10 and 20.
+
+* **Verification of Hop Redundancy**
+```cisconetwork 
+show standby brief
+```
+---
+
 ## ⚙️ Key Features
 - Redundant internet connectivity using dual ISP architecture
 - Secure network segmentation through VLAN implementation 
@@ -151,7 +167,8 @@ Switch# show ip interface brief
 ✅ Network topology design and VLAN segmentation.  
 ✅ Trunking configuration and baseline switch configuration.  
 ✅ SSH remote access and administrative ACLs.  
-✅ Subnetting and IP addressing 
+✅ Subnetting and IP addressing  
+✅ First Hop Redundancy Protocol (HSRP) & Gateway Load Sharing  
 ⬜ OSPF on firewalls, routers and switches.  
 ⬜ and more
 
